@@ -35,7 +35,7 @@ void getGradePoint() {
 	float gradePoint = 0.00;
 
 	if (flag == 1) {
-		printf("Invalid input.");
+		printf("\033[0;31m Invalid input.\033[0m");
 	}
 	flag = 0;
 
@@ -100,7 +100,7 @@ void viewResults() {
 	int sumCreditHours = 0;
 	float cgpa = 0.00;
 
-	//get andstore quality point for all course
+	//get and store quality point for all course
 	for (g = 0; g < 6; g++) {
 		qualityPoint = allCourse[g].gradePoint * allCourse[g].creditHour;
 		allCourse[g].qualityPoint = qualityPoint;
@@ -146,12 +146,19 @@ void viewResults() {
 	printf("\n%35s%15.2f\n", "CGPA:", cgpa);
 
 	if (sumCreditHours < 21) {
-		printf("\nStudent does not fullfill 21 credit hours of study.\n");
+		printf("\n\033[0;31m Student does not fullfill 21 credit hours of study..\033[0m\n");
+	}
+	else {
+		printf("\n\033[0;32m Student fullfill 21 credit hours of study..\033[0m\n");
 	}
 	
 	printf("Press any key to go back...");
 	getch();
 	return;
+}
+
+void importStudentInfo() {
+	FILE* fp;
 }
 
 void updateStudentScreen() {
@@ -207,7 +214,7 @@ void staffMainScreen() {
 			printf("(0) Back\n");
 			switch (flag) {
 			case 1:
-				printf("Invalid input\n");
+				printf("\033[0;31mInvalid input.\033[0m\n");
 				break;
 			}
 			flag = 0;
@@ -245,7 +252,7 @@ void staffIDScreen() {
 		printf("Enter 0 to go back...\n");
 		switch (flag) {
 		case 1:
-			printf("Invalid input.\n");
+			printf("\033[0;31mInvalid input.\033[0m\n");
 			break;
 		}
 		flag = 0;
@@ -282,7 +289,7 @@ void studentMainScreen() {
 			printf("(0) Back\n");
 			switch (flag) {
 			case 1:
-				printf("Invalid input.\n");
+				printf("\033[0;31mInvalid input.\033[0m\n");
 				break;
 			}
 			flag = 0;
@@ -316,7 +323,7 @@ void studentIDScreen() {
 		printf("Enter 0 to go back...\n");
 		switch (flag) {
 		case 1:
-			printf("Invalid input.\n");
+			printf("\033[0;31mInvalid input.\033[0m\n");
 			break;
 		}
 		flag = 0;
@@ -353,7 +360,7 @@ void mainSelectionScreen() {
 		printf("(0) Quit\n");
 		switch (flag) {
 		case 1:
-			printf("Invalid Input\n");
+			printf("\033[0;31mInvalid input.\033[0m\n");
 			break;
 		}
 		flag = 0;
@@ -370,7 +377,7 @@ void mainSelectionScreen() {
 			break;
 		case 0:
 			clearScreen();
-			printf("Have a nice day ~");
+			printf("Have a nice day ~\n");
 			break;
 		default:
 			flag = 1;
@@ -379,6 +386,33 @@ void mainSelectionScreen() {
 }
 
 void main() {
+	printf(" KKK    KKK      OOOOOOOOOOOOO       LLL               EEEEEEEEEEE              JJJ\n");
+	printf(" KKK   KKK       OO         OO       LLL               EEE                      JJJ\n");
+	printf(" KKK  KKK        OO         OO       LLL               EEE                      JJJ\n");
+	printf(" KKK KKK         OO         OO       LLL               EEE                      JJJ\n");
+	printf(" KKKKK           OO         OO       LLL               EEEEEEEEEEE              JJJ\n");
+	printf(" KKK KKK         OO         OO       LLL               EEE                      JJJ\n");
+	printf(" KKK  KKK        OO         OO       LLL               EEE              JJJ     JJJ\n");
+	printf(" KKK   KKK       OO         OO       LLL               EEE              JJJ     JJJ\n");
+	printf(" KKK    KKK      OOOOOOOOOOOOO       LLLLLLLLLLLL      EEEEEEEEEEEE     JJJJJJJJJJJ\n");
+
+	printf("\n\n\n");
+
+	printf("                 PPPPPPPPPPPPP       AAAAAAAAAAAA      SSSSSSSSSSS      AAAAAAAAAAAA      RRRRRRRRRRRR\n");
+	printf("                 PP         PP       AAA      AAA      SSS              AAA      AAA      RR        RR\n");
+	printf("                 PP         PP       AAA      AAA      SSS              AAA      AAA      RR        RR\n");
+	printf("                 PP         PP       AAA      AAA      SSS              AAA      AAA      RR        RR\n");
+	printf("                 PPPPPPPPPPPPP       AAAAAAAAAAAA      SSSSSSSSSSS      AAAAAAAAAAAA      RRRRRRRRRRRR\n");
+	printf("                 PP                  AAA      AAA              SSS      AAA      AAA      RR    RRR    \n");
+	printf("                 PP                  AAA      AAA              SSS      AAA      AAA      RR     RRR   \n");
+	printf("                 PP                  AAA      AAA              SSS      AAA      AAA      RR      RRR  \n");
+	printf("                 PP                  AAA      AAA      SSSSSSSSSSS      AAA      AAA      RR       RRR \n");
+
+	printf("========================================================================================================\n");
+
+	printf("\033[0;32mPress Any Key to Continue.....\033[0m");
+	getch();
+
 	mainSelectionScreen();
 
 	system("pause");
