@@ -7,8 +7,6 @@
 void staffMainScreen();
 void studentMainScreen();
 
-
-
 char globalStudentID[10];
 char globalStudentName[50];
 float gp;
@@ -41,7 +39,8 @@ void getGradePoint() {
 
 	printf("Input the grade       :");
 	scanf("%s", &grade);
-
+	
+	//get Grade Point
 	switch (grade[0]) {
 	case 'A':
 	case 'a':
@@ -357,6 +356,7 @@ void mainSelectionScreen() {
 		printf("(1) Staff Administrator Mode\n");
 		printf("(2) Student Administrator Mode\n");
 		printf("(0) Quit\n");
+		
 		switch (flag) {
 		case 1:
 			printf("\033[0;31mInvalid input.\033[0m\n");
