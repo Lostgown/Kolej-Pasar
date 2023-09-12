@@ -157,10 +157,6 @@ void viewResults() {
 	return;
 }
 
-void importStudentInfo() {
-	FILE* fp;
-}
-
 void updateStudentScreen() {
 	int sem = 1;
 	int i = 0;
@@ -197,6 +193,9 @@ void updateStudentScreen() {
 		printf("-----------------------------\n");
 		i++;
 	}
+	printf("\033[0;32m Student's Details stored.\033[0m\n");
+	printf("Press any key to go back... ");
+	getch();
 	return;
 }
 
