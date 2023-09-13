@@ -4,12 +4,14 @@
 #include <string.h>
 #include <Windows.h>
 #pragma warning (disable :4996)
-void staffMainScreen();
-void studentMainScreen();
+#define STAFFID "S001"
+#define STAFFPASSWORD "limkahhao19888"
 
 char globalStudentID[10];
 char globalStudentName[50];
 float gp;
+int sumCreditHours = 0;
+float cgpa = 0.00;
 
 struct courseDetail {
 	char courseName[9];
@@ -38,7 +40,7 @@ void getGradePoint() {
 	flag = 0;
 
 	printf("Input the grade       :");
-	scanf("%s", &grade);
+	scanf_s("%s", &grade, 3);
 	
 	//get Grade Point
 	switch (grade[0]) {
@@ -90,76 +92,93 @@ void getGradePoint() {
 }
 
 void viewResults() {
+	int option;
+	int flag = 0;
 	int sem = 1;
 	int i = 0;
 	int n = 0;
 	int g = 0;
 	float qualityPoint = 0.00;
 	float sumQualityPoint = 0.00;
-	int sumCreditHours = 0;
-	float cgpa = 0.00;
 
-	//get and store quality point for all course
-	for (g = 0; g < 6; g++) {
-		qualityPoint = allCourse[g].gradePoint * allCourse[g].creditHour;
-		allCourse[g].qualityPoint = qualityPoint;
-	}
+	do {
+		//get and store quality point for all course
+		for (g = 0; g < 6; g++) {
+			qualityPoint = allCourse[g].gradePoint * allCourse[g].creditHour;
+			allCourse[g].qualityPoint = qualityPoint;
+		}
 
-	//calculate gpa for all course
-	allCourse[1].gpa = (allCourse[0].qualityPoint + allCourse[1].qualityPoint) / (allCourse[0].creditHour + allCourse[1].creditHour);
-	allCourse[2].gpa = (allCourse[2].qualityPoint + allCourse[3].qualityPoint) / (allCourse[2].creditHour + allCourse[3].creditHour);
-	allCourse[3].gpa = (allCourse[4].qualityPoint + allCourse[5].qualityPoint) / (allCourse[4].creditHour + allCourse[5].creditHour);
+		//calculate gpa for all course
+		allCourse[1].gpa = (allCourse[0].qualityPoint + allCourse[1].qualityPoint) / (allCourse[0].creditHour + allCourse[1].creditHour);
+		allCourse[2].gpa = (allCourse[2].qualityPoint + allCourse[3].qualityPoint) / (allCourse[2].creditHour + allCourse[3].creditHour);
+		allCourse[3].gpa = (allCourse[4].qualityPoint + allCourse[5].qualityPoint) / (allCourse[4].creditHour + allCourse[5].creditHour);
 
-	clearScreen();
+		clearScreen();
 	
-	printf("Student ID  : %s\n",globalStudentID);
-	printf("Student Name: %s\n",globalStudentName);
+		printf("Student ID  : %s\n",globalStudentID);
+		printf("Student Name: %s\n",globalStudentName);
 
-	printf("%-20s%15s%15s\n", "Course Name", "Credit Hour","Grade Point");
-	printf("==========================================================\n");
+		printf("%-20s%15s%15s\n", "Course Name", "Credit Hour","Grade Point");
+		printf("==========================================================\n");
 
-	for (sem = 1; sem < 4; sem++) {
-		printf("----------\nSEMESTER %d\n----------\n",sem);
-		printf("%-20s%15d%15.2f\n", allCourse[n].courseName, allCourse[n].creditHour, allCourse[n].gradePoint);
+		for (sem = 1; sem < 4; sem++) {
+			printf("----------\nSEMESTER %d\n----------\n",sem);
+			printf("%-20s%15d%15.2f\n", allCourse[n].courseName, allCourse[n].creditHour, allCourse[n].gradePoint);
 
-		n++;
+			n++;
 
-		printf("%-20s%15d%15.2f\n", allCourse[n].courseName, allCourse[n].creditHour, allCourse[n].gradePoint);
-		printf("%50s", "--------------------\n");
-		printf("%35s%15.2f\n", "GPA :", allCourse[sem].gpa);
+			printf("%-20s%15d%15.2f\n", allCourse[n].courseName, allCourse[n].creditHour, allCourse[n].gradePoint);
+			printf("%50s", "--------------------\n");
+			printf("%35s%15.2f\n", "GPA :", allCourse[sem].gpa);
 
-		n++;
-	}
+			n++;
+		}
 
-	//calculate sum of credit hours and quality point
-	for (i = 0; i < 6; i++) {
-		sumCreditHours = sumCreditHours + allCourse[i].creditHour;
-		sumQualityPoint = sumQualityPoint + allCourse[i].qualityPoint;
-	}
+		//calculate sum of credit hours and quality point
+		for (i = 0; i < 6; i++) {
+			sumCreditHours = sumCreditHours + allCourse[i].creditHour;
+			sumQualityPoint = sumQualityPoint + allCourse[i].qualityPoint;
+		}
 
-	//calculate cgpa
-	cgpa = sumQualityPoint / sumCreditHours;
+		//calculate cgpa
+		cgpa = sumQualityPoint / sumCreditHours;
 
-	printf("----------------------------------------------------------\n");
-	printf("\n%35s%15d\n", "Total Credit Hour:", sumCreditHours);
-	printf("\n%35s%15.2f\n", "CGPA:", cgpa);
+		printf("----------------------------------------------------------\n");
+		printf("\n%35s%15d\n", "Total Credit Hour:", sumCreditHours);
+		printf("\n%35s%15.2f\n", "CGPA:", cgpa);
 
-	if (sumCreditHours < 21) {
-		printf("\n\033[0;31m Student does not fullfill 21 credit hours of study..\033[0m\n");
-	}
-	else {
-		printf("\n\033[0;32m Student fullfill 21 credit hours of study..\033[0m\n");
-	}
+		if (sumCreditHours < 21) {
+			printf("\n\033[0;31m Student does not fullfill 21 credit hours of study..\033[0m\n");
+		}
+		else {
+			printf("\n\033[0;32m Student fullfill 21 credit hours of study..\033[0m\n");
+		}
 	
-	printf("Press any key to go back...");
-	getch();
-	return;
+		printf("(0)Back\n");
+		switch (flag) {
+		case 1:
+			printf("\033[0;31mInvalid input.\033[0m\n");
+			break;
+		}
+		flag = 0;
+
+		printf("Please select your mode: ");
+		scanf("%d", &option);
+	
+		switch (option) {
+
+		case 0:
+			return;
+			break;
+		default:
+			flag = 1;
+		}
+	} while (option != 0);
 }
 
 void updateStudentScreen() {
 	int sem = 1;
 	int i = 0;
-	
 
 	clearScreen();
 
@@ -172,7 +191,7 @@ void updateStudentScreen() {
 
 	for (sem = 1; sem < 4; sem++) {
 
-		printf("----------\nSemester %d\n",sem);
+		printf("----------\nSemester %d\n", sem);
 		printf("----------\n");
 		printf("Enter Course Name     :");
 		scanf("%s", &allCourse[i].courseName);
@@ -196,6 +215,7 @@ void updateStudentScreen() {
 	printf("Press any key to go back... ");
 	getch();
 	return;
+	
 }
 
 void staffMainScreen() {
@@ -237,9 +257,10 @@ void staffMainScreen() {
 }
 
 void staffIDScreen() {
-	char staffID[] = "S001";
+	char staffID[] = STAFFID;
 	char staffID1[5];
-	int comparison;
+	char staffPassword[] = STAFFPASSWORD;
+	char staffPassword1[20];
 	int flag = 0;
 
 	do {
@@ -252,20 +273,34 @@ void staffIDScreen() {
 		case 1:
 			printf("\033[0;31mInvalid input.\033[0m\n");
 			break;
+		case 2:
+			printf("\033[0;31mInvalid Staff ID\033[0m\n");
+			break;
+		case 3:
+			printf("\033[0;31mInvalid Password\033[0m\n");
+			break;
 		}
 		flag = 0;
 
 		printf("Please enter your staff ID > ");
 		scanf("%s", &staffID1);
 
-		//validate staff ID
-		comparison = strcmp(staffID, staffID1);
+		if (strcmp("0", staffID1) == 0) {
+			return;
+		}
 
-		if (comparison == 0) {
+		printf("Please enter your Password > ");
+		scanf(" %s", &staffPassword1);
+
+		//validate staff ID and Password
+		if ((strcmp(staffID, staffID1)== 0) && (strcmp(staffPassword, staffPassword1) == 0)){
 			staffMainScreen();
 		}
-		else if (strcmp("0", staffID1) == 0) {
-			return;
+		else if (strcmp(staffID, staffID1) != 0){
+			flag = 2;
+		}
+		else if (strcmp(staffPassword, staffPassword1) != 0) {
+			flag = 3;
 		}
 		else {
 			flag = 1;
