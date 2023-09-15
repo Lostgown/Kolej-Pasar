@@ -179,12 +179,33 @@ void viewResults() {
 void updateStudentScreen() {
 	int sem = 1;
 	int i = 0;
-
-	clearScreen();
+	int comparison = 0;
+	int flag = 0;
 
 	//get student info
-	printf("Enter student's ID > ");
-	scanf("%s", &globalStudentID);
+	do {
+		
+		clearScreen();
+
+		switch (flag) {
+		case 1:
+			printf("\033[0;31mInvalid ID format.\033[0m\n");
+			break;
+		}
+		flag = 0;
+
+		printf("Enter student's ID > ");
+		scanf("%s", &globalStudentID);
+
+		if (strncmp(globalStudentID, "KPKL", 4) == 0) {
+			flag = 2;
+		}
+		else {
+			flag = 1;
+		}
+		
+	} while (flag != 2);
+	
 	printf("Enter student's name > ");
 	scanf("%s", &globalStudentName);
 	clearScreen();
